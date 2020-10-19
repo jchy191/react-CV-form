@@ -1,4 +1,5 @@
 import React from 'react';
+import {Consumer} from './Context';
 
 const schoolList = [
     {
@@ -66,32 +67,42 @@ class Education extends React.Component {
         })
     }
 
-    render(){
-        let addButton;
-        if (this.props.editMode) {
-            addButton = <button className="school-add-button" onClick={this.handleAddSchool}>Add School?</button>
-        }
-
-        return(
-        <div className="education cv-section">
-            <h2>Education</h2>
-            {addButton}
-            {this.state.schools.map(school => 
-            <School
-                key={school.key}
-                id={school.key}
-                name={school.name}
-                startDate={school.startDate}
-                endDate={school.endDate}
-                qualification={school.qualification}
-                editMode={this.props.editMode}
-                deleteSchool={this.handleDeleteSchool}
-            />)}
-        </div>
-        
-        )
+    handleInput(e){
+        let id = e.target.id;
+        this.setState({
+            
+        })
     }
 
+    render(){
+        return(
+            <Consumer>
+            {({editMode}) => {
+                let addButton;
+                if (editMode) {
+                    addButton = <button className="school-add-button" onClick={this.handleAddSchool}>Add School?</button>
+                }
+                return(
+                <div className="education cv-section">
+                    <h2>Education</h2>
+                    {addButton}
+                    {this.state.schools.map(school => 
+                    <School
+                        key={school.key}
+                        id={school.key}
+                        name={school.name}
+                        startDate={school.startDate}
+                        endDate={school.endDate}
+                        qualification={school.qualification}
+                        editMode={editMode}
+                        deleteSchool={this.handleDeleteSchool}
+                    />)}
+                </div>
+                )
+            }}
+        </Consumer>
+        )
+    }
 }
 
 export default Education
@@ -99,6 +110,9 @@ export default Education
 class School extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+
+        }
     }
     render() {
         const {name, startDate, endDate, qualification} = this.props;

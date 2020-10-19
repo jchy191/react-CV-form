@@ -1,4 +1,5 @@
 import React from 'react';
+import {Consumer} from './Context';
 
 class Summary extends React.Component {
     constructor(props) {
@@ -15,17 +16,24 @@ class Summary extends React.Component {
 
     render(){
 
-        let element;
-        if (this.props.editMode) {
-            element = <SummaryForm summaryForm={this.state.summary} handleInput={this.handleInput}/>
-        } else {
-            element = <SummaryText summary={this.state.summary} />
-        }
-
+        
         return(
             <div className="summary cv-section">
                 <h2>Summary</h2>
-                {element}
+                <Consumer>
+                    {({editMode}) => {
+                        let element;
+                        if (editMode) {
+                            element = <SummaryForm summaryForm={this.state.summary} handleInput={this.handleInput}/>
+                        } else {
+                            element = <SummaryText summary={this.state.summary} />
+                        }
+                        return (
+                            <React.Fragment>
+                                {element}
+                            </React.Fragment>);
+                    }}
+                </Consumer>
             </div>
         )
     }

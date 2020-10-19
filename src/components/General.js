@@ -1,4 +1,5 @@
 import React from 'react';
+import {Consumer} from './Context';
 
 class General extends React.Component {
 
@@ -28,17 +29,26 @@ class General extends React.Component {
 
     render() {
 
-        let element; 
-        if (this.props.editMode) {
-            element = <GeneralForm information={this.state.information} handleInput={this.handleInput}/>
-        } else {
-            element = <GeneralText information={this.state.information} />
-        }
+       
 
         return(
             <div className="general cv-section">
                 <h2>General Information</h2>
-                {element}
+                <Consumer>
+                    {({editMode}) => {
+                        let element; 
+                            if (editMode) {
+                                element = <GeneralForm information={this.state.information} handleInput={this.handleInput}/>
+                            } else {
+                                element = <GeneralText information={this.state.information} />
+                            }
+                        return (
+                            <React.Fragment>
+                                {element}
+                            </React.Fragment>
+                            )
+                    }}
+                </Consumer>
             </div>
             
         )
