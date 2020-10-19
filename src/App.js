@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import General from './components/General';
+import Summary from './components/Summary';
+import Education from './components/Education'
 
 class App extends React.Component {
 
@@ -31,6 +33,9 @@ class App extends React.Component {
           <button className='edit-button' onClick={() => this.handleEditClick()}>Edit form?</button>
         }
         <General editMode={this.state.editMode}/>
+        <Summary editMode={this.state.editMode}/>
+        <Education editMode={this.state.editMode}/>
+
       </div>
     );
   }

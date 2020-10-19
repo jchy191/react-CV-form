@@ -9,13 +9,8 @@ class General extends React.Component {
                 name: 'Joshua Chin',
                 gender:'Male',
                 dateOfBirth: '19/01/2000',
-                email:'joshuachin191@gmail.com'
-            },
-            inputValue: {
-                name: '',
-                gender:'',
-                dateOfBirth: '',
-                email:''
+                email:'joshuachin191@gmail.com',
+                profession: 'Student'
             }
         }
     }
@@ -30,9 +25,6 @@ class General extends React.Component {
         })
     }
 
-    handleEditMode = () => {
-
-    }
 
     render() {
 
@@ -58,62 +50,72 @@ export default General
 
 
 const GeneralText = (props) => {
-    const {name, gender, dateOfBirth, email} = props.information;
+    const {name, gender, dateOfBirth, email, profession} = props.information;
     return (
         <div>
             <p><b>Name: </b>{name}</p>
             <p><b>Gender: </b>{gender}</p>
-            <p><b>Date of Birth :</b>{dateOfBirth}</p>
-            <p><b>Email </b>{email}</p>
+            <p><b>Date of Birth: </b>{dateOfBirth}</p>
+            <p><b>Email: </b>{email}</p>
+            <p><b>Profession: </b>{profession}</p>
         </div>
     )
 }
 
-class GeneralForm extends React.Component {
- 
-    render(){
-        return (
-            <form>
-                <label><b>Name: </b>
-                    <input 
-                        type='text'
-                        placeholder='Enter your name'
-                        id='name'
-                        value={this.props.information.name}
-                        onChange={this.props.handleInput}
-                    />
-                </label>
-                <br></br>
-                <label><b>Gender: </b>
-                    <input 
-                        type='text'
-                        placeholder='Enter your gender'
-                        id='gender'
-                        value={this.props.information.gender}
-                        onChange={this.props.handleInput}
-                    />
-                </label>
-                <br></br>
-                <label><b>Date of Birth: </b>
-                    <input 
-                        type='text'
-                        placeholder='Enter your date of birth'
-                        id='dateOfBirth'
-                        value={this.props.information.dateOfBirth}
-                        onChange={this.props.handleInput}
-                    />
-                </label>
-                <br></br>
-                <label><b>Email: </b>
-                    <input 
-                        type='text'
-                        placeholder='Enter your email'
-                        id='email'
-                        value={this.props.information.email}
-                        onChange={this.props.handleInput}
-                    />
-                </label>
-            </form>
-        )
-    }
+const GeneralForm = (props) => {
+
+    return (
+        <form>
+            <label><b>Name: </b>
+                <input 
+                    type='text'
+                    placeholder='Enter your name'
+                    id='name'
+                    value={props.information.name}
+                    onChange={props.handleInput}
+                />
+            </label>
+            <br></br>
+            <label><b>Gender: </b>
+                <input 
+                    type='text'
+                    placeholder='Enter your gender'
+                    id='gender'
+                    value={props.information.gender}
+                    onChange={props.handleInput}
+                />
+            </label>
+            <br></br>
+            <label><b>Date of Birth: </b>
+                <input 
+                    type='text'
+                    placeholder='Enter your date of birth'
+                    id='dateOfBirth'
+                    value={props.information.dateOfBirth}
+                    onChange={props.handleInput}
+                />
+            </label>
+            <br></br>
+            <label><b>Email: </b>
+                <input 
+                    type='text'
+                    placeholder='Enter your email'
+                    id='email'
+                    value={props.information.email}
+                    onChange={props.handleInput}
+                />
+            </label>
+            <br></br>
+            <label><b>Profession: </b>
+                <input 
+                    type='text'
+                    placeholder='Enter your profession'
+                    id='progession'
+                    value={props.information.profession}
+                    onChange={props.handleInput}
+                />
+            </label>
+        </form>
+    )
+    
 }
