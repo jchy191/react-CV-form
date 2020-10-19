@@ -5,19 +5,22 @@ const schoolList = [
         name: "Balestier Hill Primary School",
         startDate: "2007-01-01",
         endDate: "2009-12-31",
-        qualification: "NIL"
+        qualification: "NIL",
+        key: 0
     },
     {
         name: "Nanyang Primary School",
         startDate: "2010-01-01",
         endDate: "2012-12-31",
-        qualification: "PSLE"
+        qualification: "PSLE",
+        key: 1
     },
     {
         name: "Raffles Institution",
         startDate: "2013-01-01",
         endDate: "2018-12-31",
-        qualification: "A-Levels"
+        qualification: "A-Levels",
+        key: 2
     }
 ]
 
@@ -26,24 +29,27 @@ class Education extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            schools: schoolList
+            schools: schoolList,
+            lastKey: 2
         };
         this.handleDeleteSchool = this.handleDeleteSchool.bind(this);
         this.handleAddSchool = this.handleAddSchool.bind(this);
     }
 
     handleAddSchool(e) {
-        console.log('hi')
         this.setState((prevState) => {
+            const key = prevState.lastKey + 1;
             const schools = [...prevState.schools];
             schools.push({
                 name: "",
                 startDate:"",
                 endDate:"",
-                qualification:""
+                qualification:"",
+                key: key
             })
             return {
-                schools: schools
+                schools: schools,
+                lastKey: key
             }
         })
     }
@@ -52,7 +58,7 @@ class Education extends React.Component {
         let id = e.target.id;
         this.setState((prevState) => {
             const schools = [...prevState.schools];
-            const newSchools = schools.filter(school => school.name !== id);
+            const newSchools = schools.filter(school => school.key != id);
             
             return {
                 schools: newSchools
@@ -72,6 +78,8 @@ class Education extends React.Component {
             {addButton}
             {this.state.schools.map(school => 
             <School
+                key={school.key}
+                id={school.key}
                 name={school.name}
                 startDate={school.startDate}
                 endDate={school.endDate}
@@ -97,7 +105,7 @@ class School extends React.Component {
         let deleteButton;
         if (this.props.editMode) {
             deleteButton = <button 
-                                id={name} 
+                                id={this.props.id} 
                                 className="school-delete-button"
                                 onClick={this.props.deleteSchool}>
                                 Delete School?
