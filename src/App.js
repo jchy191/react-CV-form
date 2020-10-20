@@ -1,5 +1,6 @@
 import React from 'react';
 import {Consumer} from './components/Context';
+import {Provider as EducationProvider} from './components/Context/Education'
 import './App.css';
 import General from './components/General';
 import Summary from './components/Summary';
@@ -34,7 +35,9 @@ class App extends React.Component {
           </Consumer>
           <General />
           <Summary />
-          <Education />
+          <EducationProvider>
+            <Education />
+          </EducationProvider>
         </div>
       
     );

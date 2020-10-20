@@ -120,7 +120,7 @@ const GeneralForm = (props) => {
                 <input 
                     type='text'
                     placeholder='Enter your profession'
-                    id='progession'
+                    id='profession'
                     value={props.information.profession}
                     onChange={props.handleInput}
                 />
