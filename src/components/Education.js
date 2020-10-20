@@ -7,21 +7,21 @@ const schoolList = [
         startDate: "2007-01-01",
         endDate: "2009-12-31",
         qualification: "NIL",
-        key: 0
+        schoolID: 0
     },
     {
         name: "Nanyang Primary School",
         startDate: "2010-01-01",
         endDate: "2012-12-31",
         qualification: "PSLE",
-        key: 1
+        schoolID: 1
     },
     {
         name: "Raffles Institution",
         startDate: "2013-01-01",
         endDate: "2018-12-31",
         qualification: "A-Levels",
-        key: 2
+        schoolID: 2
     }
 ]
 
@@ -35,22 +35,23 @@ class Education extends React.Component {
         };
         this.handleDeleteSchool = this.handleDeleteSchool.bind(this);
         this.handleAddSchool = this.handleAddSchool.bind(this);
+        this.handleInput = this.handleInput.bind(this);
     }
 
     handleAddSchool(e) {
         this.setState((prevState) => {
-            const key = prevState.lastKey + 1;
+            const schoolID = prevState.lastKey + 1;
             const schools = [...prevState.schools];
             schools.push({
                 name: "",
                 startDate:"",
                 endDate:"",
                 qualification:"",
-                key: key
+                schoolID: schoolID
             })
             return {
                 schools: schools,
-                lastKey: key
+                lastKey: schoolID
             }
         })
     }
@@ -59,7 +60,7 @@ class Education extends React.Component {
         let id = e.target.id;
         this.setState((prevState) => {
             const schools = [...prevState.schools];
-            const newSchools = schools.filter(school => school.key != id);
+            const newSchools = schools.filter(school => school.schoolID != id);
             
             return {
                 schools: newSchools
@@ -67,10 +68,16 @@ class Education extends React.Component {
         })
     }
 
-    handleInput(e){
-        let id = e.target.id;
-        this.setState({
-            
+    handleInput(e, schoolID){
+        let value = e.target.value;
+        let keyy = e.target.id;
+        this.setState(prevState => {
+            const schools = [...prevState.schools];
+            const newSchool = schools.filter(school => school.schoolID == schoolID);
+            newSchool[0][keyy] = value;
+            return {
+                schools: schools
+            }
         })
     }
 
@@ -88,14 +95,15 @@ class Education extends React.Component {
                     {addButton}
                     {this.state.schools.map(school => 
                     <School
-                        key={school.key}
-                        id={school.key}
+                        key={school.schoolID}
+                        schoolID={school.schoolID}
                         name={school.name}
                         startDate={school.startDate}
                         endDate={school.endDate}
                         qualification={school.qualification}
                         editMode={editMode}
                         deleteSchool={this.handleDeleteSchool}
+                        handleInput={this.handleInput}
                     />)}
                 </div>
                 )
@@ -110,16 +118,13 @@ export default Education
 class School extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
     }
     render() {
         const {name, startDate, endDate, qualification} = this.props;
         let deleteButton;
         if (this.props.editMode) {
             deleteButton = <button 
-                                id={this.props.id} 
+                                id={this.props.schoolID} 
                                 className="school-delete-button"
                                 onClick={this.props.deleteSchool}>
                                 Delete School?
@@ -129,9 +134,11 @@ class School extends React.Component {
                     {deleteButton}
                     <SchoolForm 
                     name={this.props.name}
+                    schoolID={this.props.schoolID}
                     startDate={this.props.startDate}
                     endDate={this.props.endDate}
                     qualification={this.props.qualification}
+                    handleInput={this.props.handleInput}
                 />
                 </React.Fragment>
                 
@@ -148,17 +155,21 @@ class School extends React.Component {
     }
 }
 
-const SchoolForm = (props) => {
+class SchoolForm extends React.Component{
 
-    return (
+    constructor(props){
+        super(props)
+    }
+    render(){
+         return (
         <form>
             <label><b>Name: </b>
                 <input 
                     type='text'
                     placeholder="Enter school's name"
                     id='name'
-                    value={props.name}
-                    onChange={props.handleInput}
+                    value={this.props.name}
+                    onChange={(e) => this.props.handleInput(e, this.props.schoolID)}
                 />
             </label>
             <br></br>
@@ -166,8 +177,8 @@ const SchoolForm = (props) => {
                 <input 
                     type='date'
                     id='startDate'
-                    value={props.startDate}
-                    onChange={props.handleInput}
+                    value={this.props.startDate}
+                    onChange={(e) => this.props.handleInput(e, this.props.schoolID)}
                 />
             </label>
             <br></br>
@@ -175,8 +186,8 @@ const SchoolForm = (props) => {
                 <input 
                     type='date'
                     id='endDate'
-                    value={props.endDate}
-                    onChange={props.handleInput}
+                    value={this.props.endDate}
+                    onChange={(e) => this.props.handleInput(e, this.props.schoolID)}
                 />
             </label>
             <br></br>
@@ -185,11 +196,12 @@ const SchoolForm = (props) => {
                     type='text'
                     placeholder='Enter the qualification attained'
                     id='qualification'
-                    value={props.qualification}
-                    onChange={props.handleInput}
+                    value={this.props.qualification}
+                    onChange={(e) => this.props.handleInput(e, this.props.schoolID)}
                 />
             </label>
         </form>
     )
+    }
     
 }
