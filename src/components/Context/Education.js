@@ -98,3 +98,12 @@ export class Provider extends React.Component {
     }
 } 
 export const Consumer = EducationContext.Consumer;
+export function withEducationContext(Component) {
+    return function ContextComponent(props) {
+        return(
+            <EducationContext.Consumer>
+                {context => <Component {...props} context={context}/>}
+            </EducationContext.Consumer>
+        )
+    }
+}

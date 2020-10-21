@@ -1,5 +1,4 @@
 import React from 'react';
-import {Consumer} from './Context';
 import {Consumer as EducationConsumer} from './Context/Education';
 
 
@@ -8,32 +7,28 @@ class Education extends React.Component {
 
     render(){
         return(
-            <Consumer>
-            {({editMode}) => (
-                <EducationConsumer>
-                    {({schools, actions}) => {
-                        let addButton;
-                        if (editMode) {
-                            addButton = <button className="school-add-button" onClick={actions.addSchool}>Add School?</button>
-                        }
-                        return(
-                        <div className="education cv-section">
-                            <h2>Education</h2>
-                            {addButton}
-                            {schools.map(school => 
-                            <School
-                                key={school.schoolID}
-                                school={{...school}}
-                                editMode={editMode}
-                                deleteSchool={actions.deleteSchool}
-                                handleInput={actions.handleInput}
-                            />)}
-                        </div>
-                        )
-                    }}
-                </EducationConsumer>
-            )}
-        </Consumer>
+            <EducationConsumer>
+                {({schools, actions}) => {
+                    let addButton;
+                    if (this.props.context.editMode) {
+                        addButton = <button className="school-add-button" onClick={actions.addSchool}>Add School?</button>
+                    }
+                    return(
+                    <div className="education cv-section">
+                        <h2>Education</h2>
+                        {addButton}
+                        {schools.map(school => 
+                        <School
+                            key={school.schoolID}
+                            school={{...school}}
+                            context={this.props.context}
+                            deleteSchool={actions.deleteSchool}
+                            handleInput={actions.handleInput}
+                        />)}
+                    </div>
+                    )
+                }}
+            </EducationConsumer>
         )
     }
 }
@@ -44,39 +39,33 @@ class School extends React.Component {
 
     render() {
         const {name, startDate, endDate, qualification, schoolID} = this.props.school;
-        return(
-            <EducationConsumer>
-                {({actions}) => {
-                    let deleteButton;
-                    if (this.props.editMode) {
-                        deleteButton = <button 
-                                            id={schoolID} 
-                                            className="school-delete-button"
-                                            onClick={actions.deleteSchool}>
-                                            Delete School?
-                                        </button>            
-                        return (
-                            <React.Fragment>
-                                {deleteButton}
-                                <SchoolForm 
-                                school={{...this.props.school}}
-                                handleInput={actions.handleInput}
-                                />
-                            </React.Fragment>
-                            
-                        )
-                    }
-                    return (
-                        <div>
-                            <h3><b>Name: </b>{name} {deleteButton}</h3>
-                            <p><b>Start Date: </b>{startDate}</p>
-                            <p><b>End Date: </b>{endDate}</p>
-                            <p><b>Qualification: </b>{qualification}</p>
-                        </div>
-                    )
-                }}
-            </EducationConsumer>
-        )        
+        const {editMode, actions} = this.props.context;
+
+        let deleteButton = <button 
+                                id={schoolID} 
+                                className="school-delete-button"
+                                onClick={actions.deleteSchool}>
+                                Delete School?
+                            </button>;
+
+
+        return(    
+            (editMode) ?                        
+                <React.Fragment>
+                    {deleteButton}
+                    <SchoolForm 
+                    school={{...this.props.school}}
+                    handleInput={actions.handleInput}
+                    />
+                </React.Fragment>
+            :     
+                <div>
+                    <h3><b>Name: </b>{name} {deleteButton}</h3>
+                    <p><b>Start Date: </b>{startDate}</p>
+                    <p><b>End Date: </b>{endDate}</p>
+                    <p><b>Qualification: </b>{qualification}</p>
+                </div>
+        )                      
     }
 }
 

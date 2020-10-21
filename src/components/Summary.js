@@ -5,13 +5,14 @@ class Summary extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            summary:""
+            summary:"",
+            skills:""
         }
         
     }
 
-    handleInput = (e) => {
-        this.setState({summary: e.target.value});
+    handleInput = (e, field) => {
+        this.setState({[field]: e.target.value});
     }
 
     render(){
@@ -26,7 +27,7 @@ class Summary extends React.Component {
                         if (editMode) {
                             element = <SummaryForm summaryForm={this.state.summary} handleInput={this.handleInput}/>
                         } else {
-                            element = <SummaryText summary={this.state.summary} />
+                            element = <SummaryText summary={this.state.summary} skills={this.state.skills}/>
                         }
                         return (
                             <React.Fragment>
@@ -46,6 +47,8 @@ const SummaryText = (props) => {
     return (
         <div>
             <p><b>Summary: </b>{props.summary}</p>
+            <br/>
+            <p><b>Skills: </b>{props.skills}</p>
         </div>
     )
 }
@@ -55,10 +58,19 @@ const SummaryForm = (props) => {
         <form>
             <label><b>Summary: </b>
                 <textarea 
-                    placeholder='Write a summary of your skills and experiences here'
+                    placeholder='Write a summary of yourself here'
                     id='summary'
                     value={props.summary}
-                    onChange={props.handleInput}
+                    onChange={(e) => props.handleInput(e, "summary")}
+                />
+            </label>
+            <br/>
+            <label><b>Skills: </b>
+                <textarea 
+                    placeholder='Write a summary of your skills and experiences here'
+                    id='skills'
+                    value={props.skills}
+                    onChange={(e) => props.handleInput(e, "skills")}
                 />
             </label>
         </form>

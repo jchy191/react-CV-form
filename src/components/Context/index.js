@@ -39,3 +39,12 @@ export class Provider extends React.Component {
 } 
 export const Consumer = CVContext.Consumer;
 
+export function withContext(Component) {
+    return function ContextComponent(props) {
+        return(
+            <CVContext.Consumer>
+                {context => <Component {...props} context={context}/>}
+            </CVContext.Consumer>
+        )
+    }
+}
