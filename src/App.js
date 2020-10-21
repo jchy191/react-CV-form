@@ -1,6 +1,5 @@
 import React from 'react';
 import {Consumer, withContext} from './components/Context';
-import {Provider as EducationProvider} from './components/Context/Education'
 import './App.css';
 import General from './components/General';
 import Summary from './components/Summary';
@@ -35,9 +34,7 @@ class App extends React.Component {
           </Consumer>
           <GeneralWithContext />
           <SummaryWithContext />
-          <EducationProvider>
-            <EducationWithContext />
-          </EducationProvider>
+          <EducationWithContext />
         </div>
       
     );
