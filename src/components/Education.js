@@ -46,7 +46,6 @@ class Education extends React.Component {
     }
 
     handleInput(e, schoolID){
-        e.preventDefault();
         let value = e.target.value;
         let key = e.target.id;
         this.setState(prevState => {

@@ -3,11 +3,13 @@ import {Consumer, withContext} from './components/Context';
 import './App.css';
 import General from './components/General';
 import Summary from './components/Summary';
-import Education from './components/Education'
+import Education from './components/Education';
+import Experience from './components/Experience';
 
 const GeneralWithContext = withContext(General);
 const SummaryWithContext = withContext(Summary);
 const EducationWithContext = withContext(Education);
+const ExperienceWithContext = withContext(Experience);
 
 
 class App extends React.Component {
@@ -35,6 +37,7 @@ class App extends React.Component {
           <GeneralWithContext />
           <SummaryWithContext />
           <EducationWithContext />
+          <ExperienceWithContext />
         </div>
       
     );
