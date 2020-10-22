@@ -14,6 +14,7 @@ class Education extends React.Component {
     }
 
     handleAddSchool(e) {
+        e.preventDefault();
         this.setState((prevState) => {
             const schoolID = prevState.lastKey + 1;
             const schools = [...prevState.schools];
@@ -32,10 +33,11 @@ class Education extends React.Component {
     }
 
     handleDeleteSchool(e) {
+        e.preventDefault();
         let id = e.target.id;
         this.setState((prevState) => {
             const schools = [...prevState.schools];
-            const newSchools = schools.filter(school => school.schoolID != id);
+            const newSchools = schools.filter(school => school.schoolID !== parseInt(id));
             
             return {
                 schools: newSchools
@@ -44,12 +46,13 @@ class Education extends React.Component {
     }
 
     handleInput(e, schoolID){
+        e.preventDefault();
         let value = e.target.value;
-        let keyy = e.target.id;
+        let key = e.target.id;
         this.setState(prevState => {
             const schools = [...prevState.schools];
-            const newSchool = schools.filter(school => school.schoolID == schoolID);
-            newSchool[0][keyy] = value;
+            const newSchool = schools.filter(school => school.schoolID === parseInt(schoolID));
+            newSchool[0][key] = value;
             return {
                 schools: schools
             }
